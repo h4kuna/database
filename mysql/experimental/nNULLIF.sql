@@ -1,0 +1,13 @@
+DROP FUNCTION `nNULLIF`;
+DELIMITER ;;
+CREATE FUNCTION `nNULLIF` (`_expr1` varchar(255), `_expr2` varchar(255)) RETURNS varchar(255) CHARACTER SET 'utf8'
+NO SQL
+    DETERMINISTIC
+BEGIN
+-- opak NULLIF
+IF(_expr1 = _expr2) THEN
+RETURN _expr1;
+END IF;
+RETURN NULL;
+END;;
+DELIMITER ;

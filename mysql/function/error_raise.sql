@@ -1,0 +1,22 @@
+DROP PROCEDURE `error_get_last`;
+DELIMITER ;;
+CREATE PROCEDURE `error_get_last` ()
+DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+  SELECT @error_code AS code, @error_message AS message;
+END;;
+DELIMITER ;
+
+DROP PROCEDURE `error_raise`;
+DELIMITER ;;
+CREATE PROCEDURE `error_raise` (IN `CODE` integer, IN `MESSAGE` varchar(255))
+DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+  CREATE TEMPORARY TABLE IF NOT EXISTS RAISE_ERROR(call_error_get_last INT NOT NULL);
+
+  SELECT CODE, MESSAGE INTO @error_code, @error_message;
+  INSERT INTO RAISE_ERROR VALUES(NULL);
+END;;
+DELIMITER ;

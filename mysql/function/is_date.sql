@@ -1,0 +1,9 @@
+DROP FUNCTION `is_date`;
+DELIMITER ;;
+CREATE FUNCTION `is_date` (`_date` varchar(10)) RETURNS tinyint(1) unsigned
+NO SQL
+    DETERMINISTIC
+BEGIN
+RETURN IFNULL(_date = DATE_ADD(_date, INTERVAL 0 DAY), 0);
+END;;
+DELIMITER ;

@@ -1,0 +1,9 @@
+DROP FUNCTION `days_year`;
+DELIMITER ;;
+CREATE FUNCTION `days_year` (`_date` date) RETURNS int(3) unsigned
+NO SQL
+    DETERMINISTIC
+BEGIN
+	RETURN DAYOFYEAR(DATE_FORMAT(_date, '%Y-12-31'));
+END;;
+DELIMITER ;
