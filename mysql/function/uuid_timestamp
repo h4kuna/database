@@ -1,0 +1,13 @@
+DELIMITER ;;
+CREATE FUNCTION `uuid_timestamp` (`_in_uuid` text) RETURNS int(11)
+BEGIN
+RETURN (conv(
+        concat(                   -- step 1: reconstruct hexadecimal timestamp
+            substring(_in_uuid, 16, 3),
+            substring(_in_uuid, 10, 4),
+            substring(_in_uuid, 1, 8)
+        ), 16, 10)                -- step 2: convert hexadecimal to decimal
+        div 10000000  -- step 3: go from nanoseconds to seconds
+       ) - 12219292800; -- step 4: (141427 * 24 * 60 * 60)
+END;;
+DELIMITER ;
